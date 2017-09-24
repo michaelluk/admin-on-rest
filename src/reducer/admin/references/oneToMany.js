@@ -8,11 +8,17 @@ export default (previousState = initialState, { type, payload, meta }) => {
             return {
                 ...previousState,
                 [meta.relatedTo]: payload.data.map(record => record.id),
+                [totalKey(meta.relatedTo)]: payload.total
             };
         default:
             return previousState;
     }
 };
+
+const totalKey = (relatedTo) => `total:${relatedTo}`
+
+export const getTotal = (state, relatedTo) =>
+  state.admin.references.oneToMany[totalKey(relatedTo)];
 
 export const getIds = (state, relatedTo) =>
     state.admin.references.oneToMany[relatedTo];
