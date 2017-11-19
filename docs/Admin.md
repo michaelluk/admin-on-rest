@@ -29,7 +29,7 @@ Here are all the props accepted by the component:
 * [`restClient`](#restclient)
 * [`title`](#title)
 * [`dashboard`](#dashboard)
-* [`catchAll](#catchall)
+* [`catchAll`](#catchall)
 * [`menu`](#menu)
 * [`theme`](#theme)
 * [`appLayout`](#applayout)
@@ -155,16 +155,22 @@ If you want to add or remove menu items, for instance to link to non-resources p
 ```jsx
 // in src/Menu.js
 import React from 'react';
+import { connect } from 'react-redux';
 import { MenuItemLink } from 'admin-on-rest';
 
-export default ({ resources, onMenuTap, logout }) => (
+const Menu = ({ resources, onMenuTap, logout }) => (
     <div>
-        <MenuItemLink to="/posts" primaryText="Posts" onTouchTap={onMenuTap} />
-        <MenuItemLink to="/comments" primaryText="Comments" onTouchTap={onMenuTap} />
-        <MenuItemLink to="/custom-route" primaryText="Miscellaneous" onTouchTap={onMenuTap} />
+        <MenuItemLink to="/posts" primaryText="Posts" onClick={onMenuTap} />
+        <MenuItemLink to="/comments" primaryText="Comments" onClick={onMenuTap} />
+        <MenuItemLink to="/custom-route" primaryText="Miscellaneous" onClick={onMenuTap} />
         {logout}
     </div>
 );
+
+const mapStateToProps = state => ({
+    resources: getResources(state),
+})
+export default connect(mapStateToProps)(Menu);
 ```
 
 **Tip**: Note the `MenuItemLink` component. It must be used to avoid unwanted side effects in mobile views.

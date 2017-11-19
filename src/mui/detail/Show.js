@@ -46,9 +46,11 @@ export class Show extends Component {
             data,
             isLoading,
             resource,
+            hasList,
             hasDelete,
             hasEdit,
             translate,
+            version,
         } = this.props;
 
         if (!children) return null;
@@ -76,6 +78,7 @@ export class Show extends Component {
                         React.cloneElement(actions, {
                             basePath,
                             data,
+                            hasList,
                             hasDelete,
                             hasEdit,
                             resource,
@@ -87,6 +90,7 @@ export class Show extends Component {
                             basePath,
                             record: data,
                             translate,
+                            version,
                         })}
                 </Card>
             </div>
@@ -99,6 +103,7 @@ Show.propTypes = {
     children: PropTypes.element,
     crudGetOne: PropTypes.func.isRequired,
     data: PropTypes.object,
+    hasList: PropTypes.bool,
     hasDelete: PropTypes.bool,
     hasEdit: PropTypes.bool,
     id: PropTypes.string.isRequired,

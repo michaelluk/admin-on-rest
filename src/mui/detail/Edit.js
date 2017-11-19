@@ -78,11 +78,13 @@ export class Edit extends Component {
             data,
             hasDelete,
             hasShow,
+            hasList,
             id,
             isLoading,
             resource,
             title,
             translate,
+            version,
         } = this.props;
 
         if (!children) return null;
@@ -113,22 +115,26 @@ export class Edit extends Component {
                             data,
                             hasDelete,
                             hasShow,
+                            hasList,
                             resource,
                         })}
                     <ViewTitle title={titleElement} />
-                    {data &&
+                    {data ? (
                         React.cloneElement(children, {
                             save: this.save,
                             resource,
                             basePath,
                             record: data,
                             translate,
+                            version,
                             redirect:
                                 typeof children.props.redirect === 'undefined'
                                     ? this.defaultRedirectRoute()
                                     : children.props.redirect,
-                        })}
-                    {!data && <CardText>&nbsp;</CardText>}
+                        })
+                    ) : (
+                        <CardText>&nbsp;</CardText>
+                    )}
                 </Card>
             </div>
         );
@@ -143,6 +149,7 @@ Edit.propTypes = {
     data: PropTypes.object,
     hasDelete: PropTypes.bool,
     hasShow: PropTypes.bool,
+    hasList: PropTypes.bool,
     id: PropTypes.string.isRequired,
     isLoading: PropTypes.bool.isRequired,
     location: PropTypes.object.isRequired,
